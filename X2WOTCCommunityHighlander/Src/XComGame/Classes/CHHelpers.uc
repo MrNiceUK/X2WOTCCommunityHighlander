@@ -122,6 +122,22 @@ var config array<name> RequiresTargetingActivation;
 var config array<name> AdditionalAmbushRiskTemplates;
 // End Issue #485
 
+// Start Issue #317
+struct CharSpeachLookup
+{
+	var name CharSpeech;
+	var array <name> PersonalityVariant;
+};
+
+struct PersonalitySpeechLookup
+{
+	var name Personality;
+	var array <CharSpeachLookup> CharSpeeches;
+};
+
+var config array <PersonalitySpeechLookup> PersonalitySpeech;
+// End Issue #317
+
 // Start Issue #123
 simulated static function RebuildPerkContentCache() {
 	local XComContentManager		Content;
