@@ -2794,19 +2794,25 @@ Begin:
 		
 		XComPlayerController(Pres.Owner).NotifyStartTacticalSeamlessLoad();		
 		//Stop any movies playing. HideLoadingScreen also re-enables rendering
+		WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(TRUE);
 		Pres.UIStopMovie();
 		Pres.HideLoadingScreen();
 		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(true, MakeColor(0, 0, 0), vect2d(0, 1), 0.0);
 
-		WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(TRUE);
 
+		while (!WorldInfo.MyLocalEnvMapManager.AreCapturesComplete())
+		{
+			Sleep(0);
+		}
+
+		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false, , , 1.0);
 		//Let the dropship settle in
-		Sleep(1.0f);
+		//Sleep(1.0f);
 
-		WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(FALSE);
+		//WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(FALSE);
 
-		`log("CreateTacticalGame: CIN_XP_UI_LogoSpin started");
-		`XENGINE.PlayMovie(true, "CIN_XP_UI_LogoSpin.bk2");
+		//`log("CreateTacticalGame: CIN_XP_UI_LogoSpin started");
+		//`XENGINE.PlayMovie(true, "CIN_XP_UI_LogoSpin.bk2");
 	}
 	else
 	{
@@ -2832,13 +2838,13 @@ Begin:
 
 	while( ParcelManager.IsGeneratingMap() )
 	{
-		if (bShowDropshipInteriorWhileGeneratingMap && ParcelManager.GeneratingMapPhase > 1 && class'XComEngine'.static.IsAnyMoviePlaying())
-		{			
-			`log("CreateTacticalGame: Map phase 2 started, clearing loading movie");
-			`XENGINE.StopCurrentMovie();
-			Sleep(0.5f); //Scene needs to initialize after the movie is stopped.
-			class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false);
-		}		
+		//if (bShowDropshipInteriorWhileGeneratingMap && ParcelManager.GeneratingMapPhase > 1 && class'XComEngine'.static.IsAnyMoviePlaying())
+		//{			
+			//`log("CreateTacticalGame: Map phase 2 started, clearing loading movie");
+			//`XENGINE.StopCurrentMovie();
+			//Sleep(0.5f); //Scene needs to initialize after the movie is stopped.
+			//class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false);
+		//}		
 
 		Sleep(0.0f);
 	}
