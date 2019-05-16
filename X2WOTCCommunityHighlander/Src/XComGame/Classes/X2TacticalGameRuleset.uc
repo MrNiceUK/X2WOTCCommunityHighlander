@@ -2805,6 +2805,7 @@ Begin:
 			Sleep(0);
 		}
 
+		WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(FALSE);
 		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false, , , 1.0);
 		//Let the dropship settle in
 		//Sleep(1.0f);
