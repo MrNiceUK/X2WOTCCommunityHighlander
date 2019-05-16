@@ -1204,13 +1204,26 @@ Begin:
 		}				
 
 		XComPlayerController(`HQPRES.Owner).NotifyStartTacticalSeamlessLoad();
-		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false);
+		WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(TRUE);
+		`XENGINE.StopCurrentMovie();
 
-		if (`XENGINE.IsAnyMoviePlaying() == false || `XENGINE.IsMoviePlaying("CIN_XP_UI_LogoSpin.bk2") == false)
+		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(true, MakeColor(0, 0, 0), vect2d(0, 1), 0.0);
+
+		while (!WorldInfo.MyLocalEnvMapManager.AreCapturesComplete())
 		{
-			`XENGINE.StopCurrentMovie();
-			`XENGINE.PlayMovie(true, "CIN_XP_UI_LogoSpin.bk2");
-		}		
+			Sleep(0);
+		}
+
+		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false, , , 1.0);
+
+
+		//class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false);
+//
+		//if (`XENGINE.IsAnyMoviePlaying() == false || `XENGINE.IsMoviePlaying("CIN_XP_UI_LogoSpin.bk2") == false)
+		//{
+			//`XENGINE.StopCurrentMovie();
+			//`XENGINE.PlayMovie(true, "CIN_XP_UI_LogoSpin.bk2");
+		//}		
 	}	
 	else
 	{
@@ -1259,17 +1272,17 @@ Begin:
 
 	if(ShowDropshipInterior())
 	{
-		`XENGINE.StopCurrentMovie();
-
-		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(true, MakeColor(0, 0, 0), vect2d(0, 1), 0.0);
-
-		while (!WorldInfo.MyLocalEnvMapManager.AreCapturesComplete())
-		{
-			Sleep(0);
-		}
-
-		class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false, , , 1.0);
-
+		//`XENGINE.StopCurrentMovie();
+//
+		//class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(true, MakeColor(0, 0, 0), vect2d(0, 1), 0.0);
+//
+		//while (!WorldInfo.MyLocalEnvMapManager.AreCapturesComplete())
+		//{
+			//Sleep(0);
+		//}
+//
+		//class'WorldInfo'.static.GetWorldInfo().GetALocalPlayerController().ClientSetCameraFade(false, , , 1.0);
+//
 		WorldInfo.bContinueToSeamlessTravelDestination = false;
 		XComPlayerController(`HQPRES.Owner).NotifyLoadedDestinationMap('');
 		while(!WorldInfo.bContinueToSeamlessTravelDestination)
@@ -1285,6 +1298,7 @@ Begin:
 	}
 	else
 	{
+		WorldInfo.MyLocalEnvMapManager.SetEnableCaptures(TRUE);
 		while(class'XComEngine'.static.IsAnyMoviePlaying() && !class'XComEngine'.static.IsLoadingMoviePlaying())
 		{
 			Sleep(0.0f);

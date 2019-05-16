@@ -15,6 +15,9 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Final_Release' ">
+    <OutputPath>bin\Final_Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Config\" />
     <Folder Include="Localization\" />
